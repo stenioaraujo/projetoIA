@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Offense Classifier!</title>
+
+    <meta name="description" content="Offense Classifier">
+    <meta name="author" content="LayoutIt!">
+    <meta name="author"
+          content="Grupo de IA: Stenio, Erick, Elyeversson, Vinicius">
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+
+  </head>
+  <body>
+    <div class="container-fluid">
+	<div class="row">
+		<div class="col-md-12">
+			<div class="page-header">
+				<h1>
+					Offense Classifier<br><small>Classify small sentenses
+                as Offensive or not.</small>
+				</h1>
+			</div>
+			<table id="classifiers" class="table table-hover table-condensed">
+				<thead>
+					<tr>
+						<th>
+							Classifier ID
+						</th>
+						<th>
+							Classifier Name
+						</th>
+						<th>
+							Created
+						</th>
+						<th>
+							Status
+						</th>
+						<th>
+							Delete
+						</th>
+					</tr>
+				</thead>
+				<tbody id="classifier_list">
+				</tbody>
+			</table>
+			<h3>
+				Selected: <span id="classifier_id">_</span> - <span
+                    id="classifier_name">_</span>
+			</h3>
+			<div class="tabbable" id="tabs-41450">
+				<ul class="nav nav-tabs">
+					<li class="active">
+						<a href="#panel-931911"
+                           data-toggle="tab">Classify a sentence
+                        </a>
+					</li>
+					<li>
+						<a href="#panel-720133" data-toggle="tab">Train with
+                            a new dataset</a>
+					</li>
+				</ul>
+				<div class="tab-content">
+					<div class="tab-pane active" id="panel-931911">
+						<p>
+							<form role="form" lpformnum="10">
+								<div class="form-group">
+
+									<label for="text_to_classify">
+										Text to classify
+									</label>
+									<input class="form-control" id="text_to_classify" style="background-image: url(&quot;undefined&quot;); background-repeat: no-repeat; background-attachment: scroll; background-size: 16px 18px; background-position: 98% 50%;" type="text">
+								</div>
+								<button id="classifyText" type=button" class="btn btn-default">
+									Classify
+								</button>
+							</form>
+							<table id="sentences" class="table">
+								<thead>
+									<tr>
+										<th rowspan="2">
+											Classifier ID
+										</th>
+										<th rowspan="2">
+											Text
+										</th>
+										<th colspan="2">
+											Confidence
+										</th>
+									</tr>
+                                    <tr>
+										<th>
+											Offense
+										</th>
+										<th>
+                                            Non-Offense
+										</th>
+                                    </tr>
+								</thead>
+								<tbody id="sentences_list">
+								</tbody>
+							</table>
+						</p>
+					</div>
+					<div class="tab-pane" id="panel-720133">
+						<p>
+							<form role="form" lpformnum="11">
+								<div class="form-group">
+
+									<label for="classifierName">
+										Classifier Name
+									</label>
+									<input class="form-control"
+                                           id="classifierName"
+                                           style="background-image: url(&quot;undefined&quot;); background-repeat: no-repeat; background-attachment: scroll; background-size: 16px 18px; background-position: 98% 50%;" type="text">
+								</div>
+								<div class="form-group">
+									<label for="trainingFIle">
+										File input
+									</label>
+									<input id="trainingFIle" type="file">
+									<p class="help-block">
+										Add a CSV separated by commas with
+                        two columns, the first column is the text, the
+                        second column is the classification. No header is
+                        needed in this CSV.
+									</p>
+								</div>
+								<button id="upload_dataset" class="btn
+                                        btn-default" type=button">
+									Upload dataset
+								</button>
+								<div class="form-group">
+                                    <div class="progress">
+                                        <div id="progress_upload" class="progress-bar progress-success" style="width: 0%;"></div>
+                                    </div>
+                                </div>
+							</form>
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+    <script src="js/axios.min.js"></script>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/3.7.1/firebase.js"></script>
+    <script>
+      // Initialize Firebase
+      var config = {
+        apiKey: "AIzaSyDu-B_-uMwB0MZm1S_yjiPrDHXd-G7RfpI",
+        authDomain: "projetoia-185d5.firebaseapp.com",
+        databaseURL: "https://projetoia-185d5.firebaseio.com",
+        storageBucket: "projetoia-185d5.appspot.com",
+        messagingSenderId: "808546962351"
+      };
+      firebase.initializeApp(config);
+    </script>
+
+    <script src="js/scripts.js"></script>
+  </body>
+</html>
