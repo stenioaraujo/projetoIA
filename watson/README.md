@@ -6,7 +6,7 @@
 
 ### Installation
 
-From with the root directory run:
+From within the watson directory run:
 
     npm install && npm start
 	
