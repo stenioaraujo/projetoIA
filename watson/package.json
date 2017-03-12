@@ -1,0 +1,21 @@
+{
+  "name": "projetoIA",
+  "version": "0.0.1",
+  "description": "A client for the Watson implementation",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "repository": "https://github.com/stenioaraujo/projetoIA",
+  "keywords": [
+    "Electron",
+    "projetoIA",
+    "IBM",
+    "Watson"
+  ],
+  "author": "GitHub",
+  "license": "Apache2",
+  "devDependencies": {
+    "electron": "^1.4.1"
+  }
+}
