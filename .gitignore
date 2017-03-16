@@ -1,2 +1,4 @@
-*.py
+*.pyc
 .idea
+watson/npm-debug.log
+node_modules
