@@ -1,4 +1,4 @@
 numpy
 scipy
-sci-sklearn
+scikit-sklearn
 nltk
