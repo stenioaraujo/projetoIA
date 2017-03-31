@@ -5,9 +5,12 @@ mpl.use('Agg')
 
 
 def rodar_modelo():
+    #Comentarios e Labels dos arquivos test_with_solutions.csv e train.csv
     comentarios, categorias = carregar_dados()
+    #Carregar comentarios para teste posterior ao treinamento
     comentarios_teste = carregar_teste("testes_para_saida.csv")
 
+    #Carrega o classificador
     classificador = criar_classificador()
     classificador.fit(comentarios, categorias)
     resultado_fuzzy = classificador.predict_proba(comentarios_teste)
