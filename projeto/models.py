@@ -21,5 +21,6 @@ def criar_classificador():
     badwords_pipe = Pipeline([('bad', badwords), ('scaler', scaler)])
     fp = FeaturePilha([("badwords", badwords_pipe), ("chars",
                                                      tfidf_char), ("words", tfidf_palavras)])
+    #O ultimo é um estimador que precisa implementar apenas um fit
     pipeline = Pipeline([('vect', fp), ('select', selecao), ('logr', classificador)])
     return pipeline
