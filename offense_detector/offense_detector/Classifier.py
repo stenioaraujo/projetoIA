@@ -14,7 +14,8 @@ class Classifier:
         self.processed_data = {
             "features": None,
             "labels": None,
-            "tfidf_matrix": None
+            "tfidf_matrix": None,
+            "split_features": None
         }
         self.gaussian_nb = GaussianNB()
         self.nb_classifier = None
@@ -51,10 +52,13 @@ class Classifier:
 
             tfidf_matrix = self.vectorizer.fit_transform(sentences_processed)
 
+            split_features = [s.split() for s in sentences_processed]
+
             self.processed_data = {
                 "features": sentences_processed,
                 "tfidf_matrix": tfidf_matrix,
-                "labels": labels
+                "labels": labels,
+                "split_features": split_features
             }
         return self
 

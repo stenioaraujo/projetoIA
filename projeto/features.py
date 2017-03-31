@@ -16,57 +16,57 @@ from IPython.core.debugger import Tracer
 tracer = Tracer()
 
 
-def remove_non_ascii(s):
+def remover_caracteres_estranhos(s):
     return "".join(i for i in s if ord(i) < 128)
 
 
-class DensifyTransformer(BaseEstimator):
+class Densidade(BaseEstimator):
     def fit(self, X, y=None):
         return self
 
 
-
-class BadWordCounter(BaseEstimator):
+class BadWord(BaseEstimator):
     def __init__(self):
         with open("my_badlist.txt") as f:
             badwords = [l.strip() for l in f.readlines()]
         self.badwords_ = badwords
 
-    def fit(self, documents, y=None):
+    def fit(self, comentarios, y=None):
         return self
 
-    def transform(self, documents):
-        ## some handcrafted features!
-        n_words = [len(c.split()) for c in documents]
-        n_chars = [len(c) for c in documents]
-        # number of uppercase words
-        allcaps = [np.sum([w.isupper() for w in comment.split()])
-               for comment in documents]
-        # longest word
-        max_word_len = [np.max([len(w) for w in c.split()]) for c in documents]
-        # average word length
-        mean_word_len = [np.mean([len(w) for w in c.split()])
-                                            for c in documents]
-        # number of google badwords:
-        n_bad = [np.sum([c.lower().count(w) for w in self.badwords_])
-                                                for c in documents]
-        exclamation = [c.count("!") for c in documents]
-        addressing = [c.count("@") for c in documents]
-        spaces = [c.count(" ") for c in documents]
+    def transform(self, comentarios):
+        numero_palavras = [len(c.split()) for c in comentarios]
+        numero_caracteres_comentario = [len(c) for c in comentarios]
+        # numero de palavras tudo maiusculo
+        maiusculas = [np.sum([w.isupper() for w in comentario.split()])
+               for comentario in comentarios]
+        # palavra com maior comprimento
+        maior_comprimento_palavras = [np.max([len(w) for w in c.split()])
+                                      for c in comentarios]
+        # tamanho medio das palavras
+        tamanho_medio = [np.mean([len(w) for w in c.split()])
+                                            for c in comentarios]
+        # numero de plavras que batem com as palavras ruim do google
+        google_palavras = [np.sum([c.lower().count(w) for w in self.badwords_])
+                           for c in comentarios]
+        num_exclamacao = [c.count("!") for c in comentarios]
+        referencia_alguem = [c.count("@") for c in comentarios]
+        espacoes = [c.count(" ") for c in comentarios]
 
-        allcaps_ratio = np.array(allcaps) / np.array(n_words, dtype=np.float)
-        bad_ratio = np.array(n_bad) / np.array(n_words, dtype=np.float)
+        media_tudo_maiusculo = (
+            np.array(maiusculas) / np.array(numero_palavras, dtype=np.float))
 
-        return np.array([n_words, n_chars, allcaps, max_word_len,
-            mean_word_len, exclamation, addressing, spaces, bad_ratio, n_bad,
-            allcaps_ratio]).T
+        palavras_google_media = (
+            np.array(google_palavras) / np.array(numero_palavras,dtype=np.float))
+
+        return np.array([numero_palavras, numero_caracteres_comentario,
+                         maiusculas, maior_comprimento_palavras, tamanho_medio,
+                         num_exclamacao, referencia_alguem, espacoes,
+                         palavras_google_media, google_palavras,
+                         media_tudo_maiusculo]).T
 
 
-class FeatureStacker(BaseEstimator):
-    """Stacks several transformer objects to yield concatenated features.
-    Similar to pipeline, a list of tuples ``(name, estimator)`` is passed
-    to the constructor.
-    """
+class FeaturePilha(BaseEstimator):
     def __init__(self, transformer_list):
         self.transformer_list = transformer_list
 
@@ -79,13 +79,13 @@ class FeatureStacker(BaseEstimator):
         return self
 
     def transform(self, X):
-        features = []
+        caracteristicas = []
         for name, trans in self.transformer_list:
-            features.append(trans.transform(X))
-        issparse = [sparse.issparse(f) for f in features]
+            caracteristicas.append(trans.transform(X))
+        issparse = [sparse.issparse(f) for f in caracteristicas]
         if np.any(issparse):
-            features = sparse.hstack(features).tocsr()
+            caracteristicas = sparse.hstack(caracteristicas).tocsr()
         else:
-            features = np.hstack(features)
-        return features
+            caracteristicas = np.hstack(caracteristicas)
+        return caracteristicas
 
